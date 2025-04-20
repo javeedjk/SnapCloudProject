@@ -1,0 +1,5 @@
+Flask
+
+# https://pypi.org/project/gunicorn
+gunicorn
+boto3
