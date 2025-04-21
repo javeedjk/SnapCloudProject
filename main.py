@@ -53,8 +53,20 @@ def upload_image():
 
 @app.route('/files/<filename>')
 def display_file(filename):
-    image_bytes = fetch_s3_file_as_bytes('cloud-computingproject', filename)
-    return Response(io.BytesIO(image_bytes), mimetype='image/jpeg')
+    return f"""
+        <br/>
+    <body>
+    <div style="background: radial-gradient(black, transparent); padding: 50px; 
+                                border-radius: 120px; margin-left: 100px; margin-right: 100px;">
+        <a href="/" style="padding: 50px;">Back to Home Page</a>
+    <br/>
+        <center >
+            <h2>{filename}</h2>
+            <img src="/images/{filename}" width='60%'>
+        </center>
+    </div>
+    </body>
+    """
 
 @app.route('/images/<imagename>')
 def getfile(imagename):
@@ -75,7 +87,6 @@ def list_s3_object_names(bucket_name, prefix=''):
     return object_names
 
 def fetch_s3_file_as_bytes(bucket_name, object_name):
-    s3_client = boto3.client('s3')
     response = s3_client.get_object(Bucket=bucket_name, Key=object_name)
     file_content = response['Body'].read()
     return file_content
