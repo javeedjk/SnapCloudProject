@@ -53,20 +53,8 @@ def upload_image():
 
 @app.route('/files/<filename>')
 def display_file(filename):
-    return f"""
-        <br/>
-    <body>
-    <div style="background: radial-gradient(black, transparent); padding: 50px; 
-                                border-radius: 120px; margin-left: 100px; margin-right: 100px;">
-        <a href="/" style="padding: 50px;">Back to Home Page</a>
-    <br/>
-        <center >
-            <h2>{filename}</h2>
-            <img src="/images/{filename}" width='60%'>
-        </center>
-    </div>
-    </body>
-    """
+    image_bytes = fetch_s3_file_as_bytes('cloud-computingproject', filename)
+    return Response(io.BytesIO(image_bytes), mimetype='image/jpeg')
 
 @app.route('/images/<imagename>')
 def getfile(imagename):
