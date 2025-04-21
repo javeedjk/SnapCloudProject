@@ -14,7 +14,7 @@ s3_client = boto3.client(
 
 @app.route("/")
 def homepage():
-    images_in_s3 = list_s3_object_names('cloud-computingproject', '')
+    images_in_s3 = list_s3_object_names('snapcloud-jk', '')
     index_html = f"""
     <body>
         <h1 align='center'>Snap Cloud</h1>
@@ -45,7 +45,7 @@ def upload_image():
     file.save(os.path.join('',file.filename))
     file_path= os.getcwd() + '/' + file.filename
     print(file_path)
-    bucket_name = 'cloud-computingproject'
+    bucket_name = 'snapcloud-jk'
     filename= file.filename
     output = upload_file_to_s3(file_path, bucket_name, filename)
     os.remove(file.filename)
@@ -70,7 +70,7 @@ def display_file(filename):
 
 @app.route('/images/<imagename>')
 def getfile(imagename):
-    image_bytes = fetch_s3_file_as_bytes('cloud-computingproject', imagename)
+    image_bytes = fetch_s3_file_as_bytes('snapcloud-jk', imagename)
     return Response(io.BytesIO(image_bytes), mimetype='image/jpeg')
 
 
